@@ -14,19 +14,19 @@ const bookingsSchema = new mongoose.Schema({
         required: true
     },
     vehicalNumber: {
-        type: Number,
+        type: String,
         required: true
     },
-    timeSlot: {
+    startTime: {
         type: Date,
         required: true
     },
-    duration: {
+    endTime: {
         type: Date,
         required: true
     },
     tokan: {
-        type: Number,
+        type: String,
         required: true
     },
     isVerified: {
@@ -37,10 +37,18 @@ const bookingsSchema = new mongoose.Schema({
         type: Boolean,
         required: true
     },
+    isDelete: {
+        type: Boolean,
+        required: true
+    },
     price: {
         type: Number,
         required: true
     },
+    // status: {
+    //     type: String,
+    //     require: false
+    // }
 });
 
 const userSchema = new mongoose.Schema({

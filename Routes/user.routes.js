@@ -222,21 +222,34 @@ router.post('/verify-otp', async (req, res) => {
     }
 });
 
-// router.put('/:id', (req, res) => {
-//     console.log(">>>>>>>>>>>>>")
-//     const id = req.params.id;
-//     const updatedData = req.body.data;
+router.put('/:username', async (req, res) => {
+    try {
+        if (req.params.username) {
+            const username = req.params.username;
+            const updatedData = req.body;
+            const hashedPass = await bcrypt.hash(updatedData.password, 10)
+            console.log(username)
+            console.log(updatedData)
+            console.log(hashedPass)
+            // create pass hash then update sp11 has updated with plain pass
 
-//     // Find the document by ID and update it
-//     userSchema.findByIdAndUpdate(id, updatedData, { new: true }, (err, updatedModel) => {
-//         if (err) {
-//             console.error(err);
-//             res.status(500).json({ error: 'Failed to update document' });
-//         } else {
-//             res.status(200).json(updatedModel);
-//         }
-//     });
-// });
+            // Find the document by ID and update it
+            const result = await userSchema.findOneAndUpdate(
+                { username: username },   // Query condition to find multiple documents
+                { $set: { password: hashedPass } })
+            console.log(result)
+
+            res.status(200).json({ message: "Update password successfully." })
+        }
+        else {
+            res.status(400).json({ message: "id not get." })
+        }
+    }
+    catch (error) {
+        console.log(error)
+        res.status(500).json({ error })
+    }
+});
 
 // router.get("/:id", async (req, res) => {
 //     try {

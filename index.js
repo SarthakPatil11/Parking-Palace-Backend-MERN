@@ -25,6 +25,7 @@ app.set("view engine", "ejs");
 app.use(express.json())
 
 app.use("/api/user", require('./Routes/user.routes'))
+app.use("/api/booking", require('./Routes/booking.routes'))
 
 app.get("/", async (req, res) => {
     const users = await userSchema.find()
@@ -32,7 +33,7 @@ app.get("/", async (req, res) => {
     res.json(users)
 })
 
-app.get("/api/p/all", async (req, res) => {
+app.get("/api/p/", async (req, res) => {
     let parking = await parkingSchema.find()
     console.log(parking)
     res.json(parking)
